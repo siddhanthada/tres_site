@@ -8,10 +8,9 @@
 <meta name="theme-color" content="#F4F2EC">
 <script>
   // resolve the stored theme before first paint so dark never flashes light
-  try{var t=localStorage.getItem("tl-theme")||"light";
-    document.documentElement.dataset.theme =
-      t==="system" ? (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light") : t;
-    document.documentElement.dataset.pref=t;}catch(e){}
+  try{var t=localStorage.getItem("tl-theme");
+    if(t!=="light"&&t!=="dark") t="light";      // migrates any older "system" value
+    document.documentElement.dataset.theme=t;}catch(e){}
 </script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
@@ -115,7 +114,7 @@ p{margin:0}
 .wordmark{font-size:19px;letter-spacing:-.035em;font-weight:600;line-height:1;
   transition:opacity .22s;white-space:nowrap}
 .wordmark i{font-style:normal;font-weight:425;color:var(--ink3)}
-.navlinks{display:flex;align-items:center;gap:clamp(14px,1.9vw,28px)}
+.navlinks{display:flex;align-items:center;gap:clamp(14px,1.9vw,28px);margin-left:auto}
 .navlinks a{position:relative;color:var(--ink2);text-decoration:none;font-size:14px;
   padding-block:4px;transition:color .2s}
 .navlinks a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;
@@ -127,22 +126,19 @@ p{margin:0}
 .navlinks .btn::after{display:none}
 .navright{display:flex;align-items:center;gap:10px;flex:none}
 
-/* theme: a three-way segment with a sliding indicator */
-.themeseg{position:relative;display:inline-flex;gap:0;padding:3px;border-radius:99px;
-  background:var(--sink);border:1px solid var(--line)}
-.themeseg::before{content:"";position:absolute;top:3px;left:3px;width:28px;height:28px;
-  border-radius:99px;background:var(--raise);
-  box-shadow:0 1px 2px rgba(20,22,26,.10),0 0 0 1px var(--line);
-  transform:translateX(calc(var(--i,0) * 28px));
-  transition:transform .3s cubic-bezier(.3,.9,.3,1)}
-[data-theme="dark"] .themeseg::before{box-shadow:0 1px 2px rgba(0,0,0,.4),0 0 0 1px var(--line2)}
-.themeseg button{position:relative;z-index:1;width:28px;height:28px;padding:0;border:none;
-  background:none;color:var(--ink3);cursor:pointer;display:grid;place-items:center;
-  border-radius:99px;transition:color .22s}
-.themeseg button:hover{color:var(--ink2)}
-.themeseg button[aria-checked="true"]{color:var(--ink)}
-.themeseg svg{width:14px;height:14px;fill:none;stroke:currentColor;
-  stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+/* theme: one button. The icon shows what you'll get, not where you are. */
+.themebtn{position:relative;width:34px;height:34px;padding:0;border-radius:8px;
+  border:1px solid var(--line2);background:transparent;color:var(--ink2);cursor:pointer;
+  display:grid;place-items:center;overflow:hidden;
+  transition:color .2s,border-color .2s}
+.themebtn:hover{color:var(--ink);border-color:var(--ink3)}
+.themebtn svg{position:absolute;width:15px;height:15px;fill:none;stroke:currentColor;
+  stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;
+  transition:opacity .3s cubic-bezier(.3,.9,.3,1),transform .3s cubic-bezier(.3,.9,.3,1)}
+.themebtn .i-moon{opacity:1;transform:none}
+.themebtn .i-sun{opacity:0;transform:rotate(-80deg) scale(.55)}
+[data-theme="dark"] .themebtn .i-moon{opacity:0;transform:rotate(80deg) scale(.55)}
+[data-theme="dark"] .themebtn .i-sun{opacity:1;transform:none}
 
 /* mobile menu trigger */
 .navtoggle{display:none;width:34px;height:34px;padding:0;border-radius:7px;
@@ -421,17 +417,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
       <a href="#demo" class="btn">Book a demo</a>
     </div>
     <div class="navright">
-      <div class="themeseg" id="themeseg" role="radiogroup" aria-label="Colour theme">
-        <button data-t="light" role="radio" aria-checked="true" aria-label="Light" title="Light">
-          <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="3.6"/><path d="M10 1.6v2.2M10 16.2v2.2M18.4 10h-2.2M3.8 10H1.6M15.9 4.1l-1.6 1.6M5.7 14.3l-1.6 1.6M15.9 15.9l-1.6-1.6M5.7 5.7L4.1 4.1"/></svg>
-        </button>
-        <button data-t="dark" role="radio" aria-checked="false" aria-label="Dark" title="Dark">
-          <svg viewBox="0 0 20 20"><path d="M16.5 11.8A7 7 0 0 1 8.2 3.5a7 7 0 1 0 8.3 8.3z"/></svg>
-        </button>
-        <button data-t="system" role="radio" aria-checked="false" aria-label="System" title="Match system">
-          <svg viewBox="0 0 20 20"><rect x="2.4" y="3.6" width="15.2" height="10.4" rx="1.6"/><path d="M7 17h6M10 14v3"/></svg>
-        </button>
-      </div>
+      <button class="themebtn" id="themebtn" aria-pressed="false" aria-label="Switch to dark theme" title="Dark theme">
+        <svg class="i-moon" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.5 11.8A7 7 0 0 1 8.2 3.5a7 7 0 1 0 8.3 8.3z"/></svg>
+        <svg class="i-sun" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.6"/><path d="M10 1.6v2.2M10 16.2v2.2M18.4 10h-2.2M3.8 10H1.6M15.9 4.1l-1.6 1.6M5.7 14.3l-1.6 1.6M15.9 15.9l-1.6-1.6M5.7 5.7L4.1 4.1"/></svg>
+      </button>
       <button class="navtoggle" id="navtoggle" aria-expanded="false" aria-controls="navlinks" aria-label="Menu">
         <svg viewBox="0 0 20 20" id="navicon"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
       </button>
@@ -746,32 +735,22 @@ const clamp=(v,a,b)=>v<a?a:v>b?b:v, f=n=>Math.round(n*100)/100;
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
 /* ─────────── theme ─────────── */
-const mq=matchMedia("(prefers-color-scheme: dark)");
-const segEl=$("#themeseg"), segBtns=$$("#themeseg button"), MODES=["light","dark","system"];
-let pref=document.documentElement.dataset.pref||"light";
+const themeBtn=$("#themebtn");
+let theme=document.documentElement.dataset.theme==="dark"?"dark":"light";
 function applyTheme(){
-  const resolved = pref==="system" ? (mq.matches?"dark":"light") : pref;
-  document.documentElement.dataset.theme=resolved;
-  document.documentElement.dataset.pref=pref;
-  segEl.style.setProperty("--i",MODES.indexOf(pref));
-  segBtns.forEach(b=>b.setAttribute("aria-checked",b.dataset.t===pref));
+  document.documentElement.dataset.theme=theme;
+  const next = theme==="dark" ? "light" : "dark";
+  themeBtn.setAttribute("aria-pressed", theme==="dark");
+  themeBtn.setAttribute("aria-label","Switch to "+next+" theme");
+  themeBtn.title = next.charAt(0).toUpperCase()+next.slice(1)+" theme";
   const tc=$('meta[name="theme-color"]');
-  if(tc) tc.setAttribute("content",resolved==="dark"?"#101113":"#F4F2EC");
+  if(tc) tc.setAttribute("content", theme==="dark"?"#101113":"#F4F2EC");
 }
-segBtns.forEach(b=>b.addEventListener("click",()=>{
-  pref=b.dataset.t; applyTheme();
-  try{localStorage.setItem("tl-theme",pref);}catch(e){}
-}));
-segEl.addEventListener("keydown",e=>{                 // arrow keys, as a radiogroup should
-  const i=MODES.indexOf(pref);
-  if(e.key==="ArrowRight"||e.key==="ArrowLeft"){
-    e.preventDefault();
-    pref=MODES[(i+(e.key==="ArrowRight"?1:MODES.length-1))%MODES.length];
-    applyTheme(); try{localStorage.setItem("tl-theme",pref);}catch(e2){}
-    segBtns[MODES.indexOf(pref)].focus();
-  }
+themeBtn.addEventListener("click",()=>{
+  theme = theme==="dark" ? "light" : "dark";
+  applyTheme();
+  try{localStorage.setItem("tl-theme",theme);}catch(e){}
 });
-mq.addEventListener("change",()=>{ if(pref==="system") applyTheme(); });
 applyTheme();
 
 /* ─────────── mobile menu ─────────── */
