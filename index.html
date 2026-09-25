@@ -301,37 +301,52 @@ p{margin:0}
 .frow.bad .fout{color:var(--fail)}
 
 /* ── improvement queue ───────────────────────────────── */
-.q{display:grid;grid-template-columns:330px 1fr;gap:clamp(26px,3.6vw,56px);align-items:start}
-.qitem{padding:15px 14px;margin-inline:-14px;border-bottom:1px solid var(--line);
-  cursor:pointer;display:flex;align-items:baseline;gap:13px;
-  transition:background .2s,box-shadow .2s,color .2s}
+.q{display:grid;grid-template-columns:minmax(250px,1fr) 1.5fr;
+  gap:clamp(26px,4vw,64px);align-items:start}
+
+/* the queue: uniform two-line rows, so nothing goes ragged when a title wraps */
+.qitem{padding:16px 14px;margin-inline:-14px;border-bottom:1px solid var(--line);
+  cursor:pointer;transition:background .2s,box-shadow .2s}
 .qitem:first-child{border-top:1px solid var(--line)}
-.qitem .qn{font-family:var(--mono);font-size:13px;color:var(--ink3);width:34px;flex:none;
+.qitem .qtop{display:flex;align-items:baseline;gap:13px}
+.qitem .qn{font-family:var(--mono);font-size:12.5px;color:var(--ink3);flex:none;
   transition:color .2s}
-.qitem .qt{font-size:14.5px;letter-spacing:-.008em;flex:1;color:var(--ink2);
-  transition:color .2s}
-.qitem .qs{font-size:12px;color:var(--ink3);white-space:nowrap}
+.qitem .qt{font-size:15px;letter-spacing:-.01em;color:var(--ink2);transition:color .2s}
+.qitem .qs{font-size:12.5px;color:var(--ink3);margin:4px 0 0 30px}
 .qitem:hover .qt{color:var(--ink)}
 .qitem:focus-visible{outline:2px solid var(--ink3);outline-offset:-2px}
-/* selection needs to be visible at a glance, not a weight change */
-.qitem[aria-selected="true"]{background:var(--sink);
-  box-shadow:inset 2px 0 0 var(--signal-edge)}
-.qitem[aria-selected="true"] .qt{font-weight:500;color:var(--ink)}
+.qitem[aria-selected="true"]{background:var(--sink);box-shadow:inset 2px 0 0 var(--signal-edge)}
+.qitem[aria-selected="true"] .qt{color:var(--ink);font-weight:500}
 .qitem[aria-selected="true"] .qn{color:var(--signal-edge)}
 [data-theme="dark"] .qitem[aria-selected="true"]{box-shadow:inset 2px 0 0 var(--signal)}
 [data-theme="dark"] .qitem[aria-selected="true"] .qn{color:var(--signal)}
+.qfoot{margin-top:20px;font-size:13px;color:var(--ink3)}
+
 .qdetail>div{display:none}
 .qdetail>div.on{display:block}
-/* the detail names the cluster it belongs to — the link was implicit before */
-.qhead{display:flex;align-items:baseline;gap:12px;padding-bottom:14px}
-.qhead h3{font-size:16.5px;letter-spacing:-.014em}
-.qhead span{font-size:12.5px;color:var(--ink3);margin-left:auto;white-space:nowrap}
-.qsteps{display:flex;flex-direction:column;gap:0}
-.qstep{display:grid;grid-template-columns:92px 1fr;gap:16px;padding:13px 0;
-  border-top:1px solid var(--line)}
-.qstep .qk{font-size:12.5px;color:var(--ink3)}
-.qstep .qv{font-size:14.5px;letter-spacing:-.008em}
-.qstep .qv em{font-style:normal;color:var(--ink2);display:block;font-size:13.5px;margin-top:3px}
+/* hierarchy, not a spec sheet: what happened → what we'd change →
+   what the evidence says → who decides */
+.qhead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding-bottom:18px;border-bottom:1px solid var(--line)}
+.qhead h3{font-size:clamp(18px,1.7vw,22px);letter-spacing:-.018em}
+.qhead span{font-size:13px;color:var(--ink3);margin-left:auto;white-space:nowrap}
+.qdiag{margin-top:20px;font-size:clamp(15px,1.25vw,16.5px);line-height:1.6;
+  color:var(--ink2);max-width:56ch}
+.qprop{margin-top:24px;padding:2px 0 2px 18px;
+  border-left:2px solid var(--signal-edge);max-width:54ch}
+[data-theme="dark"] .qprop{border-left-color:var(--signal)}
+.qprop b{display:block;font-size:12.5px;font-weight:400;color:var(--ink3);margin-bottom:5px}
+.qprop p{font-size:15.5px;line-height:1.55;letter-spacing:-.008em}
+.qmetrics{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,34px);
+  margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+.qmetrics div b{display:block;font-size:clamp(22px,2.2vw,30px);font-weight:560;
+  letter-spacing:-.028em;line-height:1.1}
+.qmetrics div span{display:block;margin-top:5px;font-size:12.5px;color:var(--ink3);
+  line-height:1.35}
+.qmetrics .lead b{color:var(--signal-edge)}
+[data-theme="dark"] .qmetrics .lead b{color:var(--signal)}
+.qreview{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:13.5px;color:var(--ink3);max-width:54ch}
 
 /* ── connected systems ───────────────────────────────── */
 .sys{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(30px,5vw,80px);align-items:center}
@@ -1067,45 +1082,57 @@ function updateStory(){
 
 /* ─────────── improvement queue ─────────── */
 const QS=[
- {n:"01",t:"Carrier status timeout",s:"73 calls · 7 days",
-  steps:[["Affected","73 conversations","Across 4 retailers, all inbound delivery queries."],
-         ["Cause","Carrier status API exceeded 1.5s","The agent had no fallback and apologised instead of answering."],
-         ["Proposed","Read the warehouse feed on timeout","Falls back after 1.5s, then reconciles when the carrier responds."],
-         ["Replay","+6.8% resolved","Re-run against the 73 failures plus a 1,200-call regression set."],
-         ["Guardrails","No regressions","Refund cap and PII redaction held on every replayed call."],
-         ["Review","Awaiting approval","Assigned to CX ops. Nothing ships until it is approved."]]},
- {n:"02",t:"Verification loop on joint accounts",s:"31 calls · 9 days",
-  steps:[["Affected","31 conversations","Only on accounts with two named holders."],
-         ["Cause","Second holder fails the date-of-birth check","The agent re-asks rather than offering the alternate path."],
-         ["Proposed","Offer postcode verification after one failure","Matches the policy already used by the human team."],
-         ["Replay","+4.1% resolved","No change to the single-holder path."],
-         ["Guardrails","No regressions","Identity policy unchanged."],
-         ["Review","Approved · queued","Ships with the next release window."]]},
- {n:"03",t:"Barge-in during the closing summary",s:"58 calls · 14 days",
-  steps:[["Affected","58 conversations","Concentrated in outbound reminders."],
-         ["Cause","Agent restarts the summary when interrupted","Callers hang up before it finishes a second time."],
-         ["Proposed","Acknowledge and continue from the interruption","Never restarts a summary already in progress."],
-         ["Replay","−22s median handle time","Resolution rate unchanged."],
-         ["Guardrails","No regressions","Disclosure still read in full."],
-         ["Review","In simulation","Running against the outbound regression set."]]},
- {n:"04",t:"Currency mismatch on EU refunds",s:"12 calls · 21 days",
-  steps:[["Affected","12 conversations","Euro-denominated orders refunded in sterling."],
-         ["Cause","Refund tool defaults to the tenant currency","Amount is correct; the currency label is not."],
-         ["Proposed","Read currency from the order, not the tenant","One-line change to the tool call."],
-         ["Replay","No measurable change","Low volume — correctness fix, not a performance one."],
-         ["Guardrails","No regressions","Refund cap evaluated in order currency."],
-         ["Review","Awaiting approval","Flagged to finance for sign-off."]]}
+ {n:"01", t:"Carrier status timeout", s:"73 calls · 7 days",
+  diag:"The carrier's status API went over 1.5 seconds on 73 calls across four retailers. "+
+       "With nothing to fall back on, the agent apologised instead of answering — and most "+
+       "callers hung up rather than wait.",
+  prop:"Read last-known status from the warehouse feed once the carrier call passes 1.5s, "+
+       "then reconcile quietly when it does respond.",
+  mets:[["+6.8%","projected resolution",1],["1,273","calls replayed",0],["0","guardrail regressions",0]],
+  rev:"Assigned to CX ops. Nothing reaches production until someone approves the diff."},
+
+ {n:"02", t:"Verification loop on joint accounts", s:"31 calls · 9 days",
+  diag:"Only ever on accounts with two named holders. The second holder fails the "+
+       "date-of-birth check, and the agent asks again rather than offering the alternate "+
+       "path your human team already uses.",
+  prop:"Offer postcode verification after one failed date-of-birth attempt, matching the "+
+       "policy the contact centre follows today.",
+  mets:[["+4.1%","projected resolution",1],["892","calls replayed",0],["0","guardrail regressions",0]],
+  rev:"Approved by CX ops. Queued for the next release window."},
+
+ {n:"03", t:"Barge-in during the closing summary", s:"58 calls · 14 days",
+  diag:"Concentrated in outbound reminders. When a caller interrupts the closing summary "+
+       "the agent starts it over, and a good number of them hang up before it finishes "+
+       "a second time.",
+  prop:"Acknowledge the interruption and pick up where it left off, never restarting a "+
+       "summary that is already underway.",
+  mets:[["−22s","median handle time",1],["1,540","calls replayed",0],["0","guardrail regressions",0]],
+  rev:"Running in simulation against the outbound regression set."},
+
+ {n:"04", t:"Currency mismatch on EU refunds", s:"12 calls · 21 days",
+  diag:"Euro-denominated orders are being refunded with a sterling label. The amount is "+
+       "right; the currency shown to the customer is not. Low volume, but it is the kind "+
+       "of thing that turns into a chargeback.",
+  prop:"Read the currency from the order rather than the tenant default — a one-line change "+
+       "to the refund tool call.",
+  mets:[["12","calls affected",0],["410","calls replayed",0],["0","guardrail regressions",0]],
+  rev:"Flagged to finance for sign-off before it goes anywhere near production."}
 ];
 const qList=$("#qList"), qDetail=$("#qDetail");
 qList.innerHTML=QS.map((q,i)=>
   `<div class="qitem" data-q="${i}" role="button" tabindex="0" aria-selected="${i===0}">
-     <span class="qn">${q.n}</span><span class="qt">${q.t}</span><span class="qs">${q.s}</span></div>`).join("");
+     <div class="qtop"><span class="qn">${q.n}</span><span class="qt">${q.t}</span></div>
+     <div class="qs">${q.s}</div>
+   </div>`).join("")
+ +`<p class="qfoot">Four open. One approved this week, one in simulation.</p>`;
 qDetail.innerHTML=QS.map((q,i)=>
   `<div class="${i===0?"on":""}" data-qd="${i}">
      <div class="qhead"><h3>${q.t}</h3><span>${q.s}</span></div>
-     <div class="qsteps">${q.steps.map(([k,v,e])=>
-       `<div class="qstep"><span class="qk">${k}</span>
-          <span class="qv">${v}<em>${e}</em></span></div>`).join("")}</div>
+     <p class="qdiag">${q.diag}</p>
+     <div class="qprop"><b>Proposed change</b><p>${q.prop}</p></div>
+     <div class="qmetrics">${q.mets.map(([v,l,lead])=>
+       `<div class="${lead?"lead":""}"><b>${v}</b><span>${l}</span></div>`).join("")}</div>
+     <p class="qreview">${q.rev}</p>
    </div>`).join("");
 function selectQ(i){
   $$(".qitem").forEach((el,j)=>el.setAttribute("aria-selected",j===i));
