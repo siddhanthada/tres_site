@@ -1,0 +1,7 @@
+.DS_Store
+.claude/
+node_modules/
+
+# local working copies (index.html is the deployed V2)
+treslabs-v2.html
+treslabs-home.html
