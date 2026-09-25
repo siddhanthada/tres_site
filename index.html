@@ -108,8 +108,8 @@ p{margin:0}
 .nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 84%,transparent);
   backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:22px;height:64px}
-.brand{display:flex;align-items:center;gap:11px}
-#markwrap{width:29px;height:29px;flex:none}
+.brand{display:flex;align-items:center;gap:8px}
+#markwrap{width:26px;height:28px;flex:none}
 #markwrap svg{width:100%;height:100%;display:block;overflow:visible}
 .wordmark{font-size:19px;letter-spacing:-.035em;font-weight:600;line-height:1;
   transition:opacity .22s;white-space:nowrap}
@@ -406,7 +406,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
 <nav class="nav">
   <div class="wrap">
     <div class="brand" id="brand">
-      <div id="markwrap"><svg viewBox="-170 -170 340 340" aria-label="Treslabs"><g id="rotor"></g></svg></div>
+      <div id="markwrap"><svg viewBox="-100 -100.6 202 217" aria-label="Treslabs"><g id="rotor"></g></svg></div>
       <div class="wordmark" id="wordmark">tres<i>labs</i></div>
     </div>
     <div class="navlinks" id="navlinks">
@@ -703,7 +703,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
 <!-- ═══════════ FINAL ═══════════ -->
 <section class="op final" id="demo">
   <div class="wrap">
-    <div style="width:42px;margin:0 auto 30px" id="markSlot2"></div>
+    <div style="width:62px;margin:0 auto 34px" id="markSlot2"></div>
     <h2>See what Treslabs finds in one of your calls.</h2>
     <p class="lede" style="max-width:48ch;margin:20px auto 0">Bring a recording from your
       current setup. We'll run it through Treslabs and show you what gets extracted,
@@ -797,7 +797,7 @@ const blades=[0,1,2].map(()=>{const p=document.createElementNS(NS,"path");
   p.setAttribute("d",BLADE);p.setAttribute("fill","currentColor");rotor.appendChild(p);return p;});
 const slot2=$("#markSlot2");
 if(slot2){const s=document.createElementNS(NS,"svg");
-  s.setAttribute("viewBox","-170 -170 340 340");
+  s.setAttribute("viewBox","-100 -100.6 202 217");
   s.style.cssText="width:100%;height:auto;display:block;overflow:visible";
   for(let i=0;i<3;i++){const p=document.createElementNS(NS,"path");p.setAttribute("d",BLADE);
     p.setAttribute("fill","currentColor");
