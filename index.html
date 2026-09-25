@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Treslabs — Voice agents that get better in production</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='-135.9%20-129.0%20273.9%20273.9'%3E%3Crect%20x='-135.9'%20y='-129.0'%20width='273.9'%20height='273.9'%20rx='54.8'%20fill='%23101113'/%3E%3Cg%20fill='%23CEF546'%3E%3Cpath%20d='M10.67%206.16A3.30%203.30%200%200%201%2012.32%200.00L123.40%200.00A11.70%2011.70%200%200%201%20135.10%2011.70L135.10%2065.70A7.10%207.10%200%200%201%20124.45%2071.85Z'%20transform='rotate(0)%20translate(-35.99%20-54.80)'/%3E%3Cpath%20d='M10.67%206.16A3.30%203.30%200%200%201%2012.32%200.00L123.40%200.00A11.70%2011.70%200%200%201%20135.10%2011.70L135.10%2065.70A7.10%207.10%200%200%201%20124.45%2071.85Z'%20transform='rotate(120)%20translate(-35.99%20-54.80)'/%3E%3Cpath%20d='M10.67%206.16A3.30%203.30%200%200%201%2012.32%200.00L123.40%200.00A11.70%2011.70%200%200%201%20135.10%2011.70L135.10%2065.70A7.10%207.10%200%200%201%20124.45%2071.85Z'%20transform='rotate(240)%20translate(-35.99%20-54.80)'/%3E%3C/g%3E%3C/svg%3E">
+<meta name="theme-color" content="#F4F2EC">
+<script>
+  // resolve the stored theme before first paint so dark never flashes light
+  try{var t=localStorage.getItem("tl-theme")||"light";
+    document.documentElement.dataset.theme =
+      t==="system" ? (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light") : t;
+    document.documentElement.dataset.pref=t;}catch(e){}
+</script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;450&display=swap" rel="stylesheet">
@@ -117,7 +125,56 @@ p{margin:0}
 .navlinks a:hover::after{transform:scaleX(1)}
 .navlinks .btn{height:36px;padding:0 16px;font-size:13.5px}
 .navlinks .btn::after{display:none}
-@media(max-width:860px){.navlinks a:not(.btn){display:none}}
+.navright{display:flex;align-items:center;gap:10px;flex:none}
+
+/* theme: a three-way segment with a sliding indicator */
+.themeseg{position:relative;display:inline-flex;gap:0;padding:3px;border-radius:99px;
+  background:var(--sink);border:1px solid var(--line)}
+.themeseg::before{content:"";position:absolute;top:3px;left:3px;width:28px;height:28px;
+  border-radius:99px;background:var(--raise);
+  box-shadow:0 1px 2px rgba(20,22,26,.10),0 0 0 1px var(--line);
+  transform:translateX(calc(var(--i,0) * 28px));
+  transition:transform .3s cubic-bezier(.3,.9,.3,1)}
+[data-theme="dark"] .themeseg::before{box-shadow:0 1px 2px rgba(0,0,0,.4),0 0 0 1px var(--line2)}
+.themeseg button{position:relative;z-index:1;width:28px;height:28px;padding:0;border:none;
+  background:none;color:var(--ink3);cursor:pointer;display:grid;place-items:center;
+  border-radius:99px;transition:color .22s}
+.themeseg button:hover{color:var(--ink2)}
+.themeseg button[aria-checked="true"]{color:var(--ink)}
+.themeseg svg{width:14px;height:14px;fill:none;stroke:currentColor;
+  stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* mobile menu trigger */
+.navtoggle{display:none;width:34px;height:34px;padding:0;border-radius:7px;
+  border:1px solid var(--line2);background:transparent;color:var(--ink);cursor:pointer;
+  place-items:center}
+.navtoggle svg{width:16px;height:16px;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:round;fill:none}
+.navtoggle span{display:block}
+
+@media(max-width:900px){
+  .navlinks{position:absolute;top:100%;left:0;right:0;display:none;
+    flex-direction:column;align-items:stretch;gap:0;
+    background:var(--bg);border-bottom:1px solid var(--line);
+    padding:4px var(--gut) 18px}
+  .nav.open .navlinks{display:flex}
+  .navlinks a{font-size:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .navlinks a::after{display:none}
+  .navlinks .btn{height:46px;margin-top:14px;justify-content:center;border-radius:8px}
+  .navlinks .btn:last-child{border-bottom:none}
+  .navtoggle{display:grid}
+}
+
+/* back to top */
+.totop{position:fixed;right:18px;bottom:18px;z-index:80;width:42px;height:42px;
+  border-radius:50%;border:1px solid var(--line2);background:var(--raise);color:var(--ink2);
+  cursor:pointer;display:grid;place-items:center;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(10px);pointer-events:none;
+  transition:opacity .3s,transform .3s cubic-bezier(.2,.8,.25,1),color .2s,border-color .2s}
+.totop.on{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{color:var(--ink);border-color:var(--ink3)}
+.totop svg{width:15px;height:15px;stroke:currentColor;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round;fill:none}
 
 /* ════════ THE TRACE — one primitive, both themes ════════
    Light: graphite ink, citron only as a marker.
@@ -310,10 +367,29 @@ footer{border-top:1px solid var(--line);padding-block:30px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
   justify-content:space-between;font-size:13px;color:var(--ink3)}
 
+.storyGrid{display:grid;grid-template-columns:1fr 1.45fr;
+  gap:clamp(30px,5vw,80px);align-items:center}
 @media(max-width:900px){
-  .probs,.player,.q,.sys,.caps,.secgrid{grid-template-columns:1fr}
+  .probs,.player,.q,.sys,.caps,.secgrid,.storyGrid{grid-template-columns:1fr}
+  .storyGrid{gap:28px}
   .storySticky{height:auto;position:relative;padding-block:40px}
   .storySteps{height:auto}
+}
+@media(max-width:700px){
+  .trace{--g:1px}
+  /* absolutely-placed event labels collide at this width — lay them out instead */
+  .evtband{height:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;margin-bottom:16px}
+  .evt{position:static;opacity:1;transform:none}
+  .evt .tick{display:none}
+  .evt .v{white-space:normal;font-size:13px}
+  .heroOp{padding:16px}
+  /* the call meta row wraps three ways at this width — keep the two that matter */
+  .heroTop{gap:10px;font-size:12px}
+  .heroTop #callid{display:none}
+  .heroTop .sp{display:none}
+  .line .w{width:44px}
+  .fld{grid-template-columns:72px 1fr}
+  .totop{right:14px;bottom:14px;width:38px;height:38px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -329,12 +405,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
     <option value="treslabs-v1.html">V1 — Current</option>
     <option value="" selected>V2 — Refined</option>
   </select>
-  <span>Theme</span>
-  <select id="themeSel">
-    <option value="light">Light</option>
-    <option value="dark">Dark</option>
-    <option value="system">System</option>
-  </select>
 </div>
 
 <nav class="nav">
@@ -343,12 +413,28 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
       <div id="markwrap"><svg viewBox="-170 -170 340 340" aria-label="Treslabs"><g id="rotor"></g></svg></div>
       <div class="wordmark" id="wordmark">tres<i>labs</i></div>
     </div>
-    <div class="navlinks">
+    <div class="navlinks" id="navlinks">
       <a href="#call">Product</a>
       <a href="#life">Platform</a>
       <a href="#improve">Improvement</a>
       <a href="#cases">Use cases</a>
       <a href="#demo" class="btn">Book a demo</a>
+    </div>
+    <div class="navright">
+      <div class="themeseg" id="themeseg" role="radiogroup" aria-label="Colour theme">
+        <button data-t="light" role="radio" aria-checked="true" aria-label="Light" title="Light">
+          <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="3.6"/><path d="M10 1.6v2.2M10 16.2v2.2M18.4 10h-2.2M3.8 10H1.6M15.9 4.1l-1.6 1.6M5.7 14.3l-1.6 1.6M15.9 15.9l-1.6-1.6M5.7 5.7L4.1 4.1"/></svg>
+        </button>
+        <button data-t="dark" role="radio" aria-checked="false" aria-label="Dark" title="Dark">
+          <svg viewBox="0 0 20 20"><path d="M16.5 11.8A7 7 0 0 1 8.2 3.5a7 7 0 1 0 8.3 8.3z"/></svg>
+        </button>
+        <button data-t="system" role="radio" aria-checked="false" aria-label="System" title="Match system">
+          <svg viewBox="0 0 20 20"><rect x="2.4" y="3.6" width="15.2" height="10.4" rx="1.6"/><path d="M7 17h6M10 14v3"/></svg>
+        </button>
+      </div>
+      <button class="navtoggle" id="navtoggle" aria-expanded="false" aria-controls="navlinks" aria-label="Menu">
+        <svg viewBox="0 0 20 20" id="navicon"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+      </button>
     </div>
   </div>
 </nav>
@@ -498,7 +584,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
   <div class="storySteps">
     <div class="storySticky">
       <div class="wrap storyStage">
-        <div style="display:grid;grid-template-columns:1fr 1.45fr;gap:clamp(30px,5vw,80px);align-items:center">
+        <div class="storyGrid">
           <div class="storyCopy">
             <h2 id="stTitle">One call fails.</h2>
             <p id="stBody">A customer asks where their order is. The carrier API times out,
@@ -640,6 +726,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
   </div>
 </section>
 
+<button class="totop" id="totop" aria-label="Back to top">
+  <svg viewBox="0 0 20 20"><path d="M10 16V4M4.5 9.5L10 4l5.5 5.5"/></svg>
+</button>
+
 <footer>
   <div class="wrap">
     <span>Treslabs — an operating system for customer-facing AI agents.</span>
@@ -656,15 +746,55 @@ const clamp=(v,a,b)=>v<a?a:v>b?b:v, f=n=>Math.round(n*100)/100;
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
 /* ─────────── theme ─────────── */
-const themeSel=$("#themeSel"), mq=matchMedia("(prefers-color-scheme: dark)");
+const mq=matchMedia("(prefers-color-scheme: dark)");
+const segEl=$("#themeseg"), segBtns=$$("#themeseg button"), MODES=["light","dark","system"];
+let pref=document.documentElement.dataset.pref||"light";
 function applyTheme(){
-  const v=themeSel.value;
-  document.documentElement.dataset.theme = v==="system" ? (mq.matches?"dark":"light") : v;
+  const resolved = pref==="system" ? (mq.matches?"dark":"light") : pref;
+  document.documentElement.dataset.theme=resolved;
+  document.documentElement.dataset.pref=pref;
+  segEl.style.setProperty("--i",MODES.indexOf(pref));
+  segBtns.forEach(b=>b.setAttribute("aria-checked",b.dataset.t===pref));
+  const tc=$('meta[name="theme-color"]');
+  if(tc) tc.setAttribute("content",resolved==="dark"?"#101113":"#F4F2EC");
 }
-try{ themeSel.value=localStorage.getItem("tl-theme")||"light"; }catch(e){}
-themeSel.addEventListener("change",()=>{ applyTheme(); try{localStorage.setItem("tl-theme",themeSel.value);}catch(e){} });
-mq.addEventListener("change",()=>{ if(themeSel.value==="system") applyTheme(); });
+segBtns.forEach(b=>b.addEventListener("click",()=>{
+  pref=b.dataset.t; applyTheme();
+  try{localStorage.setItem("tl-theme",pref);}catch(e){}
+}));
+segEl.addEventListener("keydown",e=>{                 // arrow keys, as a radiogroup should
+  const i=MODES.indexOf(pref);
+  if(e.key==="ArrowRight"||e.key==="ArrowLeft"){
+    e.preventDefault();
+    pref=MODES[(i+(e.key==="ArrowRight"?1:MODES.length-1))%MODES.length];
+    applyTheme(); try{localStorage.setItem("tl-theme",pref);}catch(e2){}
+    segBtns[MODES.indexOf(pref)].focus();
+  }
+});
+mq.addEventListener("change",()=>{ if(pref==="system") applyTheme(); });
 applyTheme();
+
+/* ─────────── mobile menu ─────────── */
+const navRoot=$(".nav"), navToggle=$("#navtoggle"), navIcon=$("#navicon");
+const ICON_BARS='<path d="M3 6h14M3 10h14M3 14h14"/>', ICON_X='<path d="M5 5l10 10M15 5L5 15"/>';
+function setMenu(open){
+  navRoot.classList.toggle("open",open);
+  navToggle.setAttribute("aria-expanded",open);
+  navIcon.innerHTML=open?ICON_X:ICON_BARS;
+}
+navToggle.addEventListener("click",()=>setMenu(!navRoot.classList.contains("open")));
+$$("#navlinks a").forEach(a=>a.addEventListener("click",()=>setMenu(false)));
+addEventListener("keydown",e=>{ if(e.key==="Escape") setMenu(false); });
+matchMedia("(min-width:901px)").addEventListener("change",e=>{ if(e.matches) setMenu(false); });
+
+/* ─────────── back to top ─────────── */
+const toTop=$("#totop");
+toTop.addEventListener("click",()=>scrollTo({top:0,behavior:RM.matches?"auto":"smooth"}));
+let topShown=false;
+function updateTop(){
+  const show=scrollY>620;
+  if(show!==topShown){ topShown=show; toTop.classList.toggle("on",show); }
+}
 
 /* ─────────── the mark ─────────── */
 const TRI={L:135.1,S:78,r30:3.3,r90:11.7,r60:7.1}, TIP0=[-3.9,-13.3];
@@ -1022,9 +1152,10 @@ function frame(now){
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(n=>{last=n;frame(n);});
-addEventListener("scroll",updateStory,{passive:true});
+function onScroll(){ updateStory(); updateTop(); }
+addEventListener("scroll",onScroll,{passive:true});
 addEventListener("resize",updateStory);
-updateStory();
+onScroll();
 })();
 </script>
 </body>
