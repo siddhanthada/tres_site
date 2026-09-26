@@ -348,6 +348,155 @@ p{margin:0}
 .qreview{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);
   font-size:13.5px;color:var(--ink3);max-width:54ch}
 
+/* ══════════════ V2.1 components ══════════════ */
+
+/* section kicker — sans, sentence case, not a mono micro-label */
+.kick{display:block;font-size:13px;color:var(--ink3);margin-bottom:14px;letter-spacing:-.004em}
+
+/* scroll reveal — headings and key blocks only, never every element */
+[data-reveal]{opacity:0;transform:translateY(12px);
+  transition:opacity .68s cubic-bezier(.16,1,.3,1),transform .68s cubic-bezier(.16,1,.3,1);
+  transition-delay:var(--d,0ms)}
+[data-reveal].in{opacity:1;transform:none}
+
+/* ── hero ── */
+.heroGrid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(30px,5vw,72px);
+  align-items:center;margin-top:clamp(34px,5vh,60px)}
+.mediaSlot{position:relative;aspect-ratio:4/3;border-radius:14px;overflow:hidden;
+  background:var(--sink);border:1px solid var(--line);display:grid;place-items:center}
+[data-theme="dark"] .mediaSlot{background:var(--raise)}
+.mediaSlot .hint{position:absolute;inset:auto 0 14px;text-align:center;
+  font-size:11.5px;color:var(--ink3);opacity:.7}
+.mediaSlot video,.mediaSlot img{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:block}
+.evcard{position:relative;z-index:2;width:min(88%,360px);border-radius:12px;
+  background:var(--graphite,#101113);color:#F1EFE8;padding:6px 0;
+  box-shadow:0 24px 60px -30px rgba(0,0,0,.7)}
+.evrow{display:grid;grid-template-columns:14px 74px 1fr;gap:12px;align-items:start;
+  padding:13px 18px}
+.evrow+.evrow{border-top:1px solid #23262A}
+.evrow i{width:7px;height:7px;border-radius:50%;background:#454A50;margin-top:6px;
+  transition:background .4s,box-shadow .4s}
+.evrow.on i{background:#CEF546;box-shadow:0 0 0 3px rgba(206,245,70,.14)}
+.evrow .ek{font-size:12.5px;color:#7E8287;padding-top:1px}
+.evrow .ev{font-size:14px;letter-spacing:-.008em}
+.evrow .es{display:block;font-size:12.5px;color:#7E8287;margin-top:2px}
+.heroStrip{display:flex;flex-wrap:wrap;align-items:center;gap:10px 26px;
+  margin-top:clamp(26px,4vh,44px);padding-top:22px;border-top:1px solid var(--line)}
+.phase{display:flex;align-items:baseline;gap:8px;font-size:13.5px;color:var(--ink3)}
+.phase b{font-family:var(--mono);font-size:11.5px;font-weight:450}
+.phase.on{color:var(--ink)}
+.phase.on b{color:var(--signal-edge)}
+[data-theme="dark"] .phase.on b{color:var(--signal)}
+.heroStrip .cnt{margin-left:auto;font-size:13.5px;color:var(--ink3)}
+.heroStrip .cnt b{font-weight:560;color:var(--ink);letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums}
+
+/* ── the 400-call field ── */
+.fieldWrap{display:grid;grid-template-columns:1.18fr .82fr;gap:clamp(28px,4vw,64px);
+  align-items:center;margin-top:clamp(34px,5vh,58px)}
+.dots{display:grid;grid-template-columns:repeat(20,1fr);gap:clamp(4px,.62vw,9px)}
+.dots i{aspect-ratio:1;border-radius:50%;background:var(--line2);opacity:.55;
+  transform:scale(.82);
+  transition:background .4s ease,opacity .4s ease,transform .4s cubic-bezier(.2,.8,.25,1);
+  transition-delay:var(--d,0ms)}
+.dots i.up{opacity:1;transform:scale(1)}
+.dots i.fail{background:var(--fail);opacity:1;transform:scale(1)}
+.dots i.man{background:var(--ink);opacity:.9;transform:scale(1)}
+.dots i.tres{background:var(--signal-edge);opacity:1;transform:scale(1)}
+[data-theme="dark"] .dots i.tres{background:var(--signal)}
+.lenses{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
+.lens{height:32px;padding:0 14px;border-radius:99px;border:1px solid var(--line2);
+  background:transparent;color:var(--ink2);font:450 13px/1 var(--sans);cursor:pointer;
+  transition:all .2s}
+.lens:hover{color:var(--ink);border-color:var(--ink3)}
+.lens[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.bignum{font-size:clamp(46px,6vw,82px);font-weight:560;letter-spacing:-.04em;
+  line-height:1;font-variant-numeric:tabular-nums}
+.fieldWrap p{margin-top:14px;color:var(--ink2);font-size:15.5px;max-width:34ch;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;font-size:12.5px;
+  color:var(--ink3)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:7px;height:7px;border-radius:50%}
+
+/* ── improvement: five steps ── */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  margin-top:clamp(34px,5vh,58px)}
+.step{background:var(--bg);padding:20px;display:flex;flex-direction:column;min-height:260px}
+.step .sn{font-family:var(--mono);font-size:11.5px;color:var(--ink3);margin-bottom:auto}
+.step .art{display:grid;place-items:center;min-height:96px;padding:14px 0}
+.step .val{font-size:clamp(24px,2.6vw,34px);font-weight:560;letter-spacing:-.03em;
+  line-height:1.05;margin-top:14px}
+.step .cap{font-size:13px;color:var(--ink3);margin-top:5px}
+.step.lead .val{color:var(--signal-edge)}
+[data-theme="dark"] .step.lead .val{color:var(--signal)}
+.oneDot{width:20px;height:20px;border-radius:50%;background:var(--fail);
+  box-shadow:0 0 0 9px color-mix(in srgb,var(--fail) 14%,transparent)}
+.cluster{display:grid;grid-template-columns:repeat(11,1fr);gap:4px;width:100%;max-width:170px}
+.cluster i{aspect-ratio:1;border-radius:50%;background:var(--fail);opacity:.85;
+  transform:scale(0);transition:transform .34s cubic-bezier(.2,1.5,.4,1);
+  transition-delay:var(--d,0ms)}
+.in .cluster i,.step.in .cluster i{transform:scale(1)}
+.diff{width:100%;display:flex;flex-direction:column;gap:5px;font-family:var(--mono);
+  font-size:11.5px;line-height:1.45}
+.diff span{padding:6px 9px;border-radius:5px}
+.diff .rm{background:color-mix(in srgb,var(--fail) 12%,transparent);color:var(--fail)}
+.diff .ad{background:color-mix(in srgb,var(--signal-edge) 15%,transparent);color:var(--ink)}
+[data-theme="dark"] .diff .ad{background:color-mix(in srgb,var(--signal) 13%,transparent)}
+.vbar{width:100%;display:flex;flex-direction:column;gap:11px}
+.vbar div{display:flex;align-items:center;gap:10px;font-size:12.5px}
+.vbar .vn{font-family:var(--mono);color:var(--ink3);width:30px;flex:none}
+.vbar .vt{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.vbar .vt i{display:block;height:100%;border-radius:3px;background:var(--ink3);
+  width:0;transition:width .9s cubic-bezier(.2,.8,.25,1);transition-delay:var(--d,0ms)}
+.vbar .new .vt i{background:var(--signal-edge)}
+[data-theme="dark"] .vbar .new .vt i{background:var(--signal)}
+.vbar .vp{font-family:var(--mono);width:44px;text-align:right;flex:none}
+.review{margin-top:1px;border:1px solid var(--line);border-top:none;
+  border-radius:0 0 12px 12px;padding:clamp(22px,3vw,34px);text-align:center}
+.review .sn{font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+.review h3{margin:14px 0 8px;font-size:clamp(19px,2vw,25px)}
+.review p{color:var(--ink2);font-size:14.5px;max-width:46ch;margin:0 auto}
+
+/* ── call timeline (integrations) ── */
+.ctl{display:flex;flex-direction:column}
+.ctl .r{display:grid;grid-template-columns:52px 12px 1fr auto;gap:14px;align-items:center;
+  padding:13px 0;border-bottom:1px solid var(--line);opacity:.42;transition:opacity .45s}
+.ctl .r.on{opacity:1}
+.ctl .r .tm{font-family:var(--mono);font-size:12px;color:var(--ink3)}
+.ctl .r .pin{width:8px;height:8px;border-radius:2px;background:var(--line2);
+  transition:background .35s}
+.ctl .r.on .pin{background:var(--signal-edge)}
+[data-theme="dark"] .ctl .r.on .pin{background:var(--signal)}
+.ctl .r .nm{font-size:14.5px;letter-spacing:-.008em}
+.ctl .r .ac{font-size:13px;color:var(--ink3)}
+.ctl .end{padding-top:16px;font-size:13px;color:var(--ink3)}
+
+/* ── use cases + security ── */
+.ucOut{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink3)}
+.ucOut i{width:6px;height:6px;border-radius:50%;background:var(--signal-edge)}
+[data-theme="dark"] .ucOut i{background:var(--signal)}
+.secList{display:flex;flex-direction:column;margin-top:26px}
+.secList div{display:flex;align-items:center;gap:14px;padding:13px 0;
+  border-top:1px solid var(--line);font-size:14.5px}
+.secList b{font-family:var(--mono);font-size:10.5px;font-weight:450;letter-spacing:.1em;
+  color:var(--ink3);width:92px;flex:none}
+.secList .act{color:var(--signal-edge)}
+[data-theme="dark"] .secList .act{color:var(--signal)}
+
+@media(max-width:900px){
+  .heroGrid,.fieldWrap{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .step{min-height:0}
+  .ctl .r{grid-template-columns:48px 10px 1fr;row-gap:2px}
+  .ctl .r .ac{grid-column:3}
+}
+@media(max-width:560px){
+  .steps{grid-template-columns:1fr}
+  .dots{gap:4px}
+}
+
 /* ── connected systems ───────────────────────────────── */
 .sys{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(30px,5vw,80px);align-items:center}
 .sysmap{position:relative;padding:8px 0}
@@ -458,37 +607,49 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
 <!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
   <div class="wrap">
-    <h1>Voice agents that get better in production.</h1>
-    <p class="lede">Treslabs runs AI voice agents, evaluates every conversation, and turns
-      real failures into tested improvements — with your team deciding what goes live.</p>
-    <div class="cta">
+    <h1 data-reveal>Voice agent for customer service with QA built in.</h1>
+    <p class="lede" data-reveal style="--d:80ms">Treslabs runs AI voice agents, evaluates
+      every conversation, and turns real failures into tested improvements — with your team
+      deciding what goes live.</p>
+    <div class="cta" data-reveal style="--d:150ms">
       <a href="#demo" class="btn btn-primary">Book a demo</a>
       <a href="#call" class="btn">Hear a call <span class="arw">→</span></a>
     </div>
-  </div>
-  <div class="wrap" style="margin-top:clamp(44px,7vh,88px)">
-    <div class="op heroOp">
-      <div class="heroTop">
-        <span class="pill on"><i class="dot"></i>Live</span>
-        <span class="num" id="callid" style="font-size:12.5px;color:var(--ink3)">48213 · inbound · en-GB</span>
-        <span class="sp"></span>
-        <span class="num" id="counter" style="font-size:12.5px;color:var(--ink3)">14,218 conversations</span>
+
+    <div class="heroGrid">
+      <!-- media slot: drop a <video autoplay muted loop playsinline poster="…"> in here -->
+      <div class="mediaSlot" data-reveal>
+        <div class="evcard">
+          <div class="evrow" data-ev="0"><i></i><span class="ek">Intent</span>
+            <span class="ev">Cancel reservation<em class="es">Customer verified via CRM</em></span></div>
+          <div class="evrow" data-ev="1"><i></i><span class="ek">Tool</span>
+            <span class="ev">Booking system<em class="es">Reservation TR-4471 found</em></span></div>
+          <div class="evrow" data-ev="2"><i></i><span class="ek">Action</span>
+            <span class="ev">Reservation cancelled<em class="es">Deposit refund issued</em></span></div>
+          <div class="evrow" data-ev="3"><i></i><span class="ek">Outcome</span>
+            <span class="ev">Resolved<em class="es">No handoff · scored 0.96</em></span></div>
+        </div>
+        <span class="hint">Video slot</span>
       </div>
-      <div class="evtband">
-        <div class="evt" id="he0" style="left:13%"><i class="tick"></i><span class="k">Intent</span><span class="v">Cancel reservation</span></div>
-        <div class="evt" id="he1" style="left:39%"><i class="tick"></i><span class="k">Tool</span><span class="v">Booking system</span></div>
-        <div class="evt" id="he2" style="left:62%"><i class="tick"></i><span class="k">Action</span><span class="v">Reservation cancelled</span></div>
-        <div class="evt" id="he3" style="left:84%"><i class="tick"></i><span class="k">Outcome</span><span class="v">Resolved</span></div>
-      </div>
-      <div class="trace live" id="heroTrace" style="--h:78px">
-        <div class="base"></div><div class="bars" id="heroBars"></div>
+
+      <div data-reveal style="--d:100ms">
+        <h3 style="max-width:18ch">What the agent understood, and what it did about it.</h3>
+        <p class="lede" style="margin-top:18px;font-size:15.5px;max-width:42ch">Every call is
+          broken into the same four moments. That is what makes ten thousand of them
+          comparable — and improvable.</p>
+        <div class="heroStrip">
+          <span class="phase" data-ph="0"><b>01</b>Listen</span>
+          <span class="phase" data-ph="1"><b>02</b>Act</span>
+          <span class="phase" data-ph="2"><b>03</b>Improve</span>
+          <span class="cnt"><b data-count="14279">0</b> evaluated today</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════ TRUST ═══════════ -->
-<section style="padding-block:clamp(20px,3vh,40px)">
+<section style="padding-block:clamp(22px,3vh,42px)">
   <div class="wrap" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px">
     <span class="tiny">Built with design partners in</span>
     <div class="chips" style="margin:0">
@@ -501,19 +662,33 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
 <!-- ═══════════ PROBLEM ═══════════ -->
 <section>
   <div class="wrap">
-    <div class="hw"><h2>Most voice agents stop getting better the day they go live.</h2></div>
-    <p class="lede" style="max-width:56ch;margin-top:26px">Building the agent is the easy part.
-      What breaks teams is everything after launch — failures hidden in long-tail calls,
-      manual QA, and changes that ship without proof.</p>
+    <span class="kick" data-reveal>The problem</span>
+    <h2 class="hw" data-reveal style="--d:60ms;max-width:20ch">Most voice agents stop getting
+      better the day they go live.</h2>
+
+    <div class="fieldWrap">
+      <div class="dots" id="dots" data-reveal></div>
+      <div data-reveal style="--d:120ms">
+        <div class="lenses" id="lenses"></div>
+        <div class="bignum" id="lensNum">400</div>
+        <p id="lensCopy">calls this week. From the outside, they all look fine.</p>
+        <div class="legend">
+          <span><i style="background:var(--fail)"></i>Failure</span>
+          <span><i style="background:var(--ink)"></i>Manually reviewed</span>
+          <span><i style="background:var(--signal-edge)"></i>Evaluated by Treslabs</span>
+        </div>
+      </div>
+    </div>
+
     <div class="probs">
-      <div class="prob"><i class="ix"></i><h3>Failures hide in the long tail</h3>
-        <p>The same issues can show up in a few calls each week and still go unnoticed for months.</p></div>
-      <div class="prob"><i class="ix"></i><h3>QA is a sampling problem</h3>
-        <p>Most teams review a tiny fraction of calls and assume it reflects reality. It rarely does.</p></div>
-      <div class="prob"><i class="ix"></i><h3>Fixes are guesses</h3>
-        <p>Someone edits a prompt, ships it, and waits. There is no reliable way to prove it helped.</p></div>
-      <div class="prob"><i class="ix"></i><h3>The stack is disconnected</h3>
-        <p>Building, monitoring, evaluating and improving happen in different tools. The loop never closes.</p></div>
+      <div class="prob" data-reveal><i class="ix"></i><h3>Failures hide in the long tail</h3>
+        <p>A few calls a week, the same way each time, unnoticed for months.</p></div>
+      <div class="prob" data-reveal style="--d:60ms"><i class="ix"></i><h3>QA is a sampling problem</h3>
+        <p>A tiny fraction gets reviewed, and everyone assumes it reflects the rest.</p></div>
+      <div class="prob" data-reveal style="--d:120ms"><i class="ix"></i><h3>Fixes are guesses</h3>
+        <p>Someone edits a prompt, ships it, and waits to see what happens.</p></div>
+      <div class="prob" data-reveal style="--d:180ms"><i class="ix"></i><h3>The stack is disconnected</h3>
+        <p>Build, monitor, evaluate and improve all live in different tools.</p></div>
     </div>
   </div>
 </section>
@@ -521,10 +696,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
 <!-- ═══════════ HEAR A CALL ═══════════ -->
 <section class="op" id="call">
   <div class="wrap">
-    <div class="hw"><h2>See every conversation as something you can act on.</h2></div>
-    <p class="lede" style="max-width:58ch;margin-top:24px">Treslabs breaks each call into the
-      things that matter operationally — what the customer meant, what the agent did, what
-      changed in your systems, and how the call ended.</p>
+    <span class="kick" data-reveal>Anatomy of a call</span>
+    <div class="hw" data-reveal style="--d:60ms"><h2>Every conversation becomes something you can act on.</h2></div>
+    <p class="lede" data-reveal style="--d:110ms;max-width:56ch;margin-top:24px">What the
+      customer meant, what the agent did, what changed in your systems, and how it ended.</p>
 
     <div style="margin-top:clamp(38px,5vh,66px)">
       <div class="scn" id="scn"></div>
@@ -554,9 +729,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
 <!-- ═══════════ LIFECYCLE ═══════════ -->
 <section id="life">
   <div class="wrap">
-    <div class="hw"><h2>One system that keeps changing state.</h2></div>
-    <p class="lede" style="max-width:54ch;margin-top:24px">The output of each stage is the
-      input to the next. Nothing here is a separate product.</p>
+    <span class="kick" data-reveal>The platform</span>
+    <div class="hw" data-reveal style="--d:60ms"><h2>One system that keeps changing state.</h2></div>
+    <p class="lede" data-reveal style="--d:110ms;max-width:52ch;margin-top:24px">The output of
+      each stage is the input to the next. Nothing here is a separate product.</p>
 
     <div class="life">
       <div class="lifeTrack"><i id="lifeFill"></i></div>
@@ -595,47 +771,57 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
   </div>
 </section>
 
-<!-- ═══════════ SCROLL STORY: one call → a pattern ═══════════ -->
-<section class="op story" id="story" style="padding:0">
-  <div class="storySteps">
-    <div class="storySticky">
-      <div class="wrap storyStage">
-        <div class="storyGrid">
-          <div class="storyCopy">
-            <h2 id="stTitle">One call fails.</h2>
-            <p id="stBody">A customer asks where their order is. The carrier API times out,
-              and the agent apologises instead of answering.</p>
-            <div style="margin-top:26px;display:flex;align-items:baseline;gap:10px">
-              <span class="num" id="stBig" style="font-size:clamp(28px,3.4vw,44px);letter-spacing:-.03em">1</span>
-              <span class="tiny" id="stUnit">call</span>
-            </div>
-          </div>
-          <div>
-            <div class="field" id="stField"></div>
-            <div id="stOut" style="margin-top:26px;min-height:76px"></div>
-          </div>
-        </div>
+<!-- ═══════════ IMPROVEMENT ═══════════ -->
+<section id="improve">
+  <div class="wrap" style="text-align:center">
+    <span class="kick" data-reveal>Improvement you can audit</span>
+    <h2 data-reveal style="--d:60ms;max-width:18ch;margin-inline:auto">One call fails.
+      Here's what happens next.</h2>
+    <p class="lede" data-reveal style="--d:110ms;max-width:50ch;margin:22px auto 0">The carrier
+      API times out, and the agent apologises instead of answering.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="steps" id="steps">
+      <div class="step" data-step="0">
+        <span class="sn">01 Detect</span>
+        <div class="art"><span class="oneDot"></span></div>
+        <span class="val">1 call</span>
+        <span class="cap">flagged unresolved</span>
+      </div>
+      <div class="step" data-step="1">
+        <span class="sn">02 Cluster</span>
+        <div class="art"><div class="cluster" id="cluster"></div></div>
+        <span class="val">73 calls</span>
+        <span class="cap">same failure, 30 days</span>
+      </div>
+      <div class="step" data-step="2">
+        <span class="sn">03 Propose</span>
+        <div class="art"><div class="diff">
+          <span class="rm">− apologise on timeout</span>
+          <span class="ad">+ retry carrier once</span>
+          <span class="ad">+ else give last known ETA</span>
+        </div></div>
+        <span class="val">1 change</span>
+        <span class="cap">tool-failure policy</span>
+      </div>
+      <div class="step lead" data-step="3">
+        <span class="sn">04 Replay</span>
+        <div class="art"><div class="vbar">
+          <div><span class="vn">v14</span><span class="vt"><i data-w="71.6"></i></span><span class="vp">71.6%</span></div>
+          <div class="new"><span class="vn">v15</span><span class="vt"><i data-w="78.4" style="--d:180ms"></i></span><span class="vp">78.4%</span></div>
+        </div></div>
+        <span class="val">+6.8%</span>
+        <span class="cap">on 2,400 past calls</span>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ═══════════ IMPROVEMENT QUEUE ═══════════ -->
-<section id="improve">
-  <div class="wrap">
-    <div class="hw"><h2>Improvement you can audit, not magic.</h2></div>
-    <p class="lede" style="max-width:56ch;margin-top:24px">Treslabs turns recurring failures
-      into proposed changes, validates them against real conversations, and keeps every step
-      reviewable before anything ships.</p>
-
-    <div class="q" style="margin-top:clamp(40px,6vh,72px)">
-      <div id="qList"></div>
-      <div class="qdetail" id="qDetail"></div>
+    <div class="review" data-reveal>
+      <span class="sn">05 Review</span>
+      <h3>Your call. Nothing ships silently.</h3>
+      <p>Every proposed change is a reviewable diff, tested against real conversations,
+         with the guardrails you set held constant.</p>
     </div>
-
-    <p class="tiny" style="margin-top:34px;max-width:58ch">Nothing changes silently. Every
-      proposed improvement is versioned, tested against real calls, and reviewed against the
-      guardrails you set.</p>
   </div>
 </section>
 
@@ -643,20 +829,15 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
 <section>
   <div class="wrap sys">
     <div>
-      <h2>The agent acts where the work actually lives.</h2>
-      <p class="lede" style="margin-top:22px">A conversation reaches into your systems only
-        when it needs to, and the result comes back into the call — not into a queue for
-        someone to action later.</p>
-      <p class="tiny" style="margin-top:22px">Telephony, CRM, payments, booking, support
-        platform and knowledge, connected through the same guardrails.</p>
+      <span class="kick" data-reveal>Integrations</span>
+      <h2 data-reveal style="--d:60ms">The agent acts where the work lives.</h2>
+      <p class="lede" data-reveal style="--d:110ms;margin-top:22px">Results come back into the
+        call — not into a queue for someone to action later. One conversation, reaching into
+        your systems only when it needs to.</p>
     </div>
-    <div class="sysmap" id="sysmap">
-      <div class="sysrow" data-sys="0"><i class="sn"></i><span class="sname">Telephony</span><span class="sact">call received</span></div>
-      <div class="sysrow" data-sys="1"><i class="sn"></i><span class="sname">CRM</span><span class="sact">customer identified</span></div>
-      <div class="sysrow" data-sys="2"><i class="sn"></i><span class="sname">Knowledge</span><span class="sact">policy retrieved</span></div>
-      <div class="sysrow" data-sys="3"><i class="sn"></i><span class="sname">Booking</span><span class="sact">reservation found</span></div>
-      <div class="sysrow" data-sys="4"><i class="sn"></i><span class="sname">Payments</span><span class="sact">refund authorised</span></div>
-      <div class="sysrow" data-sys="5"><i class="sn"></i><span class="sname">Support platform</span><span class="sact">ticket closed</span></div>
+    <div class="ctl" id="sysmap" data-reveal>
+      <div class="r" data-sys="0"><span class="tm">00:01</span><i class="pin"></i><span class="nm">Telephony</span><span class="ac">Call received</span></div><div class="r" data-sys="1"><span class="tm">00:03</span><i class="pin"></i><span class="nm">CRM</span><span class="ac">Customer identified</span></div><div class="r" data-sys="2"><span class="tm">00:19</span><i class="pin"></i><span class="nm">Knowledge</span><span class="ac">Policy retrieved</span></div><div class="r" data-sys="3"><span class="tm">00:34</span><i class="pin"></i><span class="nm">Booking</span><span class="ac">Reservation found</span></div><div class="r" data-sys="4"><span class="tm">01:12</span><i class="pin"></i><span class="nm">Payments</span><span class="ac">Refund authorised</span></div><div class="r" data-sys="5"><span class="tm">01:46</span><i class="pin"></i><span class="nm">Support platform</span><span class="ac">Ticket closed</span></div>
+      <div class="end">Call ends · 1m 48s · resolved, no handoff</div>
     </div>
   </div>
 </section>
@@ -664,26 +845,21 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
 <!-- ═══════════ CAPABILITIES ═══════════ -->
 <section>
   <div class="wrap">
-    <div class="hw"><h2>Built for voice agents that have to work in the real world.</h2></div>
+    <span class="kick" data-reveal>Capabilities</span>
+    <div class="hw" data-reveal style="--d:60ms"><h2>Built for the real world.</h2></div>
     <div class="caps">
-      <div class="cap"><h3>Automatic evaluation on every call</h3>
-        <p>Score every conversation for resolution, compliance, escalation quality and other
-           criteria the moment it ends.</p></div>
-      <div class="cap"><h3>Simulation and regression testing</h3>
-        <p>Replay proposed changes against historical calls before they go live, and maintain
-           a reusable regression set.</p></div>
+      <div class="cap"><h3>Evaluation on every call</h3>
+        <p>Resolution, compliance and escalation quality, scored the moment a call ends.</p></div>
+      <div class="cap"><h3>Simulation and regression</h3>
+        <p>Replay changes against historical calls before they go live, with a reusable regression set.</p></div>
       <div class="cap"><h3>Natural turn-taking</h3>
-        <p>Interruptions, barge-in and backchannelling are handled as part of conversation,
-           not as edge cases.</p></div>
+        <p>Interruptions, barge-in and backchannelling handled as conversation, not edge cases.</p></div>
       <div class="cap"><h3>Real backend actions</h3>
-        <p>Trigger bookings, payments, CRM updates and other actions, with outcomes written
-           back accurately.</p></div>
+        <p>Bookings, payments and CRM updates, with outcomes written back accurately.</p></div>
       <div class="cap"><h3>Guardrails and escalation</h3>
-        <p>Set hard boundaries for what the agent can do and clear rules for when a human
-           steps in.</p></div>
+        <p>Hard boundaries on what the agent can do, and clear rules for when a human steps in.</p></div>
       <div class="cap"><h3>Multilingual</h3>
-        <p>Run one agent across multiple languages while tracking quality separately by
-           language.</p></div>
+        <p>One agent, many languages, with quality tracked separately per language.</p></div>
     </div>
   </div>
 </section>
@@ -691,22 +867,23 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
 <!-- ═══════════ USE CASES ═══════════ -->
 <section id="cases">
   <div class="wrap">
-    <div class="hw"><h2>Where voice automation actually changes something.</h2></div>
-    <p class="lede" style="max-width:54ch;margin-top:24px">Treslabs is strongest when a
-      conversation needs to end in a real outcome — not just an answer.</p>
+    <span class="kick" data-reveal>Use cases</span>
+    <div class="hw" data-reveal style="--d:60ms"><h2>Conversations that end in a real outcome.</h2></div>
+    <p class="lede" data-reveal style="--d:110ms;max-width:52ch;margin-top:24px">Treslabs is
+      strongest when a call has to change something in a system of record.</p>
     <div class="uc" style="margin-top:clamp(36px,5vh,64px)" id="uc">
       <div class="row"><h3>Inbound support</h3>
-        <p class="txt">Resolve order status, returns and booking changes directly against live systems.</p>
-        <div class="trace mini" style="--h:22px;--g:1.5px"><div class="bars"></div></div></div>
+        <p class="txt">Order status, returns and booking changes, against live systems.</p>
+        <span class="ucOut"><i></i>Order resolved</span></div>
       <div class="row"><h3>Appointment booking</h3>
-        <p class="txt">Find, hold and confirm a slot, then write it back to the scheduling system.</p>
-        <div class="trace mini" style="--h:22px;--g:1.5px"><div class="bars"></div></div></div>
+        <p class="txt">Find, hold and confirm a slot, written back to scheduling.</p>
+        <span class="ucOut"><i></i>Slot confirmed</span></div>
       <div class="row"><h3>Lead qualification</h3>
-        <p class="txt">Qualify against your criteria and pass only high-intent prospects to the team.</p>
-        <div class="trace mini" style="--h:22px;--g:1.5px"><div class="bars"></div></div></div>
+        <p class="txt">Qualify against your criteria so only high-intent prospects reach the team.</p>
+        <span class="ucOut"><i></i>Qualified lead</span></div>
       <div class="row"><h3>Reminders and reactivation</h3>
-        <p class="txt">Run outbound conversations at scale, with the same guardrails and measurement as inbound.</p>
-        <div class="trace mini" style="--h:22px;--g:1.5px"><div class="bars"></div></div></div>
+        <p class="txt">Outbound at scale, with the same guardrails and measurement as inbound.</p>
+        <span class="ucOut"><i></i>Customer re-engaged</span></div>
     </div>
   </div>
 </section>
@@ -714,14 +891,20 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
 <!-- ═══════════ SECURITY ═══════════ -->
 <section>
   <div class="wrap secgrid">
-    <h2>Software that talks to your customers should be boring about security.</h2>
     <div>
-      <p class="lede">Recordings, transcripts and derived data stay inside your tenancy.
-        Sensitive information is redacted before storage, and every agent change is versioned,
-        attributable and reversible.</p>
-      <div class="chips">
-        <span>SOC 2 Type II — in progress</span><span>GDPR</span>
-        <span>PII redaction</span><span>Regional data residency</span><span>Audit log</span>
+      <span class="kick" data-reveal>Security</span>
+      <h2 data-reveal style="--d:60ms">Software that talks to your customers should be boring
+        about security.</h2>
+    </div>
+    <div data-reveal style="--d:110ms">
+      <p class="lede">Data stays in your tenancy. Sensitive information is redacted before
+        storage, and every agent change is versioned, attributable and reversible.</p>
+      <div class="secList">
+        <div><b>In progress</b>SOC 2 Type II</div>
+        <div><b class="act">Active</b>GDPR</div>
+        <div><b class="act">Active</b>PII redaction before storage</div>
+        <div><b class="act">Active</b>Regional data residency</div>
+        <div><b class="act">Active</b>Audit log on every change</div>
       </div>
     </div>
   </div>
@@ -732,9 +915,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
   <div class="wrap">
     <div style="width:62px;margin:0 auto 34px" id="markSlot2"></div>
     <h2>See what Treslabs finds in one of your calls.</h2>
-    <p class="lede" style="max-width:48ch;margin:20px auto 0">Bring a recording from your
-      current setup. We'll run it through Treslabs and show you what gets extracted,
-      evaluated and improved.</p>
+    <p class="lede" style="max-width:46ch;margin:20px auto 0">Bring a recording. We'll show you
+      what gets extracted, evaluated and improved.</p>
     <div class="cta">
       <a href="#" class="btn btn-primary">Book a demo</a>
       <a href="#" class="btn">Talk to an engineer <span class="arw">→</span></a>
@@ -890,31 +1072,23 @@ function draw(list,data,upto){
   }
 }
 
-/* ─────────── hero loop ─────────── */
-const HB=$("#heroBars"), HT=$("#heroTrace"), HN=78;
-let hList=bars(HB,HN), hData=speech(HN,7), hSeed=7, total=14218, callNo=48213;
-const hEvt=[0,1,2,3].map(i=>$("#he"+i)), hAt=[13,39,62,84];
-const counter=$("#counter"), callid=$("#callid");
-let hPhase="speak", hT=0;
-function heroReset(){
-  hSeed=(hSeed*31+17)%9973; hData=speech(HN,hSeed);
-  hList.forEach(b=>{b.classList.remove("on");b.style.height="8%";});
-  hEvt.forEach(e=>e.classList.remove("on"));
-  HT.className="trace live"; callid.textContent=`${++callNo} · inbound · en-GB`;
-  hPhase="speak"; hT=0;
-}
+/* ─────────── hero: the four moments of a call ─────────── */
+const evRows=$$(".evrow"), phaseEls=$$(".phase"), PH=[0,1,1,2];
+let hT=0, hStep=-1;
 function tickHero(dt){
+  if(!evRows.length) return;
   hT+=dt;
-  if(hPhase==="speak"){
-    const p=clamp(hT/5.6,0,1);
-    draw(hList,hData,Math.floor(p*HN));
-    hEvt.forEach((e,i)=>e.classList.toggle("on",p*100>=hAt[i]));
-    if(hT>=5.6){hPhase="hold";hT=0;HT.className="trace done";}
-  } else if(hPhase==="hold"){
-    if(hT>=1.8){ total++; counter.textContent=total.toLocaleString()+" conversations"; heroReset(); }
+  const per=1.25, run=per*evRows.length, hold=2.4;
+  if(hT>run+hold){ hT=0; hStep=-1;
+    evRows.forEach(r=>r.classList.remove("on")); phaseEls.forEach(p=>p.classList.remove("on")); }
+  const want=Math.min(evRows.length-1,Math.floor(hT/per));
+  if(hT<run && want!==hStep){
+    hStep=want;
+    evRows.forEach((r,i)=>r.classList.toggle("on",i<=want));
+    phaseEls.forEach((p,i)=>p.classList.toggle("on",i===PH[want]));
   }
 }
-if(RM.matches){ draw(hList,hData,HN); hEvt.forEach(e=>e.classList.add("on")); HT.className="trace done"; }
+if(RM.matches){ evRows.forEach(r=>r.classList.add("on")); phaseEls.forEach(p=>p.classList.add("on")); }
 
 /* ─────────── scenario player ─────────── */
 const SCEN=[
@@ -1036,121 +1210,65 @@ function tickLife(dt){
   if(phT>2.6){ phT=0; phase=(phase+1)%3; setPhase(phase); }
 }
 
-/* ─────────── scroll story: one call → a pattern ─────────── */
-const ST=[
- {t:"One call fails.", b:"A customer asks where their order is. The carrier API times out, and the agent apologises instead of answering.", n:1, u:"call", rows:1, out:""},
- {t:"It happens again.", b:"Not enough to trip an alert. Enough to cost you the customer, quietly, a few times a week.", n:6, u:"calls this week", rows:6, out:""},
- {t:"A pattern forms.", b:"Treslabs groups conversations by what actually went wrong, not by the words the customer used.", n:73, u:"calls clustered", rows:14, out:""},
- {t:"A cause emerges.", b:"Every call in the cluster shares one failure — the same upstream timeout, in the same step.", n:73, u:"calls · one cause", rows:14,
-  out:`<div class="dline"><span class="dk">Cause</span><span class="dv">Carrier status API exceeded 1.5s</span></div>`},
- {t:"A fix is proposed.", b:"Read last-known status from the warehouse feed when the carrier call times out. Nothing ships yet.", n:73, u:"calls · fix proposed", rows:14,
-  out:`<div class="dline"><span class="dk">Cause</span><span class="dv">Carrier status API exceeded 1.5s</span></div>
-       <div class="dline"><span class="dk">Proposed</span><span class="dv">Fallback to warehouse feed</span></div>`},
- {t:"It is replayed before it ships.", b:"Re-run against the 73 failed calls and a 1,200-call regression set. Then a human decides.", n:6.8, u:"% projected improvement", rows:14,
-  out:`<div class="dline"><span class="dk">Replay</span><span class="dv s">+6.8% resolved</span></div>
-       <div class="dline"><span class="dk">Guardrails</span><span class="dv">No regressions</span></div>
-       <div class="dline"><span class="dk">Status</span><span class="dv">Awaiting human review</span></div>`}
+/* ─────────── the 400-call field ─────────── */
+const dotsEl=$("#dots"), lensEl=$("#lenses"),
+      lensNum=$("#lensNum"), lensCopy=$("#lensCopy");
+const N_CALLS=400;
+const LENSES=[
+  {k:"all",  n:"Calls",     v:400, c:"calls this week. From the outside, they all look fine."},
+  {k:"fail", n:"Failures",  v:23,  c:"went wrong in a way worth fixing — scattered thinly enough that nobody noticed."},
+  {k:"man",  n:"Manual QA", v:18,  c:"reviewed by hand. Picked at random, not because they failed."},
+  {k:"tres", n:"Treslabs",  v:400, c:"evaluated. Every call, the moment it ends."}
 ];
-const stField=$("#stField"), stTitle=$("#stTitle"), stBody=$("#stBody"),
-      stBig=$("#stBig"), stUnit=$("#stUnit"), stOut=$("#stOut");
-const FROWS=14;
-stField.innerHTML=Array.from({length:FROWS},(_,i)=>{
-  const d=speech(44,201+i*29), bad=[0,2,3,5,6,8,9,11,12].includes(i);
-  return `<div class="frow ${bad?"bad":""}">
-    <span class="fid">#4${8100+i*7}</span>
-    <span class="fln">${d.map(v=>`<b style="--bh:${Math.round(14+v*70)}%"></b>`).join("")}</span>
-    <span class="fout">${bad?"Timeout":"Resolved"}</span></div>`;}).join("");
-const fRows=$$("#stField .frow");
-let lastStage=-1;
-function setStage(i){
-  if(i===lastStage) return; lastStage=i;
-  const s=ST[i];
-  stTitle.textContent=s.t; stBody.textContent=s.b;
-  stBig.textContent=s.n; stUnit.textContent=s.u;
-  stOut.innerHTML=s.out;
-  fRows.forEach((r,j)=>r.classList.toggle("on",j<s.rows));
+const dotEls=[];
+if(dotsEl){
+  for(let i=0;i<N_CALLS;i++){ const d=document.createElement("i");
+    d.style.setProperty("--d",((i%20)*9+Math.floor(i/20)*11)+"ms");
+    dotsEl.appendChild(d); dotEls.push(d); }
 }
-setStage(0);
-const storyEl=$("#story");
-function updateStory(){
-  const r=storyEl.getBoundingClientRect();
-  const span=r.height-innerHeight;
-  if(span<=0) return;
-  const p=clamp(-r.top/span,0,.9999);
-  setStage(Math.min(ST.length-1,Math.floor(p*ST.length)));
+// a fixed, unevenly-spread scatter reads truer than Math.random
+const pick=(seed,count)=>{const r=rnd(seed),set=new Set();
+  while(set.size<count) set.add(Math.floor(r()*N_CALLS)); return set;};
+const FAILS=pick(97,23), MANS=pick(3181,18);
+let lens=0;
+function applyLens(i){
+  lens=i; const L=LENSES[i];
+  dotEls.forEach((d,j)=>{
+    d.className="";
+    if(L.k==="all") d.classList.add("up");
+    else if(L.k==="fail"&&FAILS.has(j)) d.classList.add("fail");
+    else if(L.k==="man"&&MANS.has(j)) d.classList.add("man");
+    else if(L.k==="tres") d.classList.add("tres");
+  });
+  countTo(lensNum,L.v,600); lensCopy.textContent=L.c;
+  $$("#lenses .lens").forEach((b,j)=>b.setAttribute("aria-selected",j===i));
+}
+if(lensEl){
+  LENSES.forEach((L,i)=>{ const b=document.createElement("button");
+    b.className="lens"; b.textContent=L.n; b.setAttribute("aria-selected",i===0);
+    b.addEventListener("click",()=>applyLens(i)); lensEl.appendChild(b); });
 }
 
-/* ─────────── improvement queue ─────────── */
-const QS=[
- {n:"01", t:"Carrier status timeout", s:"73 calls · 7 days",
-  diag:"The carrier's status API went over 1.5 seconds on 73 calls across four retailers. "+
-       "With nothing to fall back on, the agent apologised instead of answering — and most "+
-       "callers hung up rather than wait.",
-  prop:"Read last-known status from the warehouse feed once the carrier call passes 1.5s, "+
-       "then reconcile quietly when it does respond.",
-  mets:[["+6.8%","projected resolution",1],["1,273","calls replayed",0],["0","guardrail regressions",0]],
-  rev:"Assigned to CX ops. Nothing reaches production until someone approves the diff."},
-
- {n:"02", t:"Verification loop on joint accounts", s:"31 calls · 9 days",
-  diag:"Only ever on accounts with two named holders. The second holder fails the "+
-       "date-of-birth check, and the agent asks again rather than offering the alternate "+
-       "path your human team already uses.",
-  prop:"Offer postcode verification after one failed date-of-birth attempt, matching the "+
-       "policy the contact centre follows today.",
-  mets:[["+4.1%","projected resolution",1],["892","calls replayed",0],["0","guardrail regressions",0]],
-  rev:"Approved by CX ops. Queued for the next release window."},
-
- {n:"03", t:"Barge-in during the closing summary", s:"58 calls · 14 days",
-  diag:"Concentrated in outbound reminders. When a caller interrupts the closing summary "+
-       "the agent starts it over, and a good number of them hang up before it finishes "+
-       "a second time.",
-  prop:"Acknowledge the interruption and pick up where it left off, never restarting a "+
-       "summary that is already underway.",
-  mets:[["−22s","median handle time",1],["1,540","calls replayed",0],["0","guardrail regressions",0]],
-  rev:"Running in simulation against the outbound regression set."},
-
- {n:"04", t:"Currency mismatch on EU refunds", s:"12 calls · 21 days",
-  diag:"Euro-denominated orders are being refunded with a sterling label. The amount is "+
-       "right; the currency shown to the customer is not. Low volume, but it is the kind "+
-       "of thing that turns into a chargeback.",
-  prop:"Read the currency from the order rather than the tenant default — a one-line change "+
-       "to the refund tool call.",
-  mets:[["12","calls affected",0],["410","calls replayed",0],["0","guardrail regressions",0]],
-  rev:"Flagged to finance for sign-off before it goes anywhere near production."}
-];
-const qList=$("#qList"), qDetail=$("#qDetail");
-qList.innerHTML=QS.map((q,i)=>
-  `<div class="qitem" data-q="${i}" role="button" tabindex="0" aria-selected="${i===0}">
-     <div class="qtop"><span class="qn">${q.n}</span><span class="qt">${q.t}</span></div>
-     <div class="qs">${q.s}</div>
-   </div>`).join("")
- +`<p class="qfoot">Four open. One approved this week, one in simulation.</p>`;
-qDetail.innerHTML=QS.map((q,i)=>
-  `<div class="${i===0?"on":""}" data-qd="${i}">
-     <div class="qhead"><h3>${q.t}</h3><span>${q.s}</span></div>
-     <p class="qdiag">${q.diag}</p>
-     <div class="qprop"><b>Proposed change</b><p>${q.prop}</p></div>
-     <div class="qmetrics">${q.mets.map(([v,l,lead])=>
-       `<div class="${lead?"lead":""}"><b>${v}</b><span>${l}</span></div>`).join("")}</div>
-     <p class="qreview">${q.rev}</p>
-   </div>`).join("");
-function selectQ(i){
-  $$(".qitem").forEach((el,j)=>el.setAttribute("aria-selected",j===i));
-  $$("[data-qd]").forEach((el,j)=>el.classList.toggle("on",j===i));
-}
-$$(".qitem").forEach((el,i)=>{
-  el.addEventListener("click",()=>selectQ(i));
-  el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();selectQ(i);}});
-});
+/* ─────────── improvement: five steps ─────────── */
+const clusterEl=$("#cluster");
+if(clusterEl) for(let i=0;i<73;i++){ const d=document.createElement("i");
+  d.style.setProperty("--d",(i*11)+"ms"); clusterEl.appendChild(d); }
+const stepEls=$$(".step");
+new IntersectionObserver((es,o)=>es.forEach(e=>{
+  if(!e.isIntersecting) return;
+  stepEls.forEach((el,i)=>setTimeout(()=>el.classList.add("in"),i*110));
+  $$(".vbar .vt i").forEach(i2=>i2.style.width=i2.dataset.w+"%");
+  o.disconnect();
+}),{threshold:.3}).observe($("#steps")||document.body);
 
 /* ─────────── connected systems ─────────── */
-const sysRows=$$(".sysrow"); let sysSeen=false, sysT=0, sysI=-1;
+const sysRows=$$("#sysmap .r"); let sysSeen=false, sysT=0, sysI=-1;
 new IntersectionObserver(es=>es.forEach(e=>{sysSeen=e.isIntersecting;}),
   {threshold:.4}).observe($("#sysmap"));
 function tickSys(dt){
   if(!sysSeen||RM.matches){ if(RM.matches) sysRows.forEach(r=>r.classList.add("on")); return; }
   sysT+=dt;
-  if(sysT>.62){ sysT=0; sysI++;
+  if(sysT>.58){ sysT=0; sysI++;
     if(sysI>sysRows.length+2){ sysI=-1; sysRows.forEach(r=>r.classList.remove("on")); }
     else sysRows.forEach((r,i)=>r.classList.toggle("on",i<=sysI));
   }
@@ -1171,10 +1289,38 @@ function frame(now){
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(n=>{last=n;frame(n);});
-function onScroll(){ updateStory(); updateTop(); }
-addEventListener("scroll",onScroll,{passive:true});
-addEventListener("resize",updateStory);
-onScroll();
+addEventListener("scroll",updateTop,{passive:true});
+updateTop();
+
+/* ─────────── reveal + count-up ───────────
+   Deliberately narrow: headings, ledes and a few key blocks carry
+   [data-reveal]. Everything else simply exists. */
+function countTo(el,to,ms){
+  if(!el) return;
+  if(RM.matches){ el.textContent=to.toLocaleString(); return; }
+  const from=parseFloat((el.textContent||"0").replace(/[^\d.]/g,""))||0;
+  const t0=performance.now();
+  (function step(now){
+    const p=Math.min(1,(now-t0)/ms), e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(from+(to-from)*e).toLocaleString();
+    if(p<1) requestAnimationFrame(step);
+  })(t0);
+}
+if(RM.matches){
+  $$("[data-reveal]").forEach(el=>el.classList.add("in"));
+  $$("[data-count]").forEach(el=>el.textContent=(+el.dataset.count).toLocaleString());
+}else{
+  const revIO=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add("in"); revIO.unobserve(e.target); }
+  }),{threshold:.15,rootMargin:"0px 0px -6% 0px"});
+  $$("[data-reveal]").forEach(el=>revIO.observe(el));
+
+  const cntIO=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ countTo(e.target,+e.target.dataset.count,1400); cntIO.unobserve(e.target); }
+  }),{threshold:.6});
+  $$("[data-count]").forEach(el=>cntIO.observe(el));
+}
+applyLens(0);
 })();
 </script>
 </body>
